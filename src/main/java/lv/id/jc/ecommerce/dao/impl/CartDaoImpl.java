@@ -21,11 +21,11 @@ public class CartDaoImpl implements CartDao {
 
     @Override
     public List<Cart> getAll() {
-        return null;
+        return repository.getAllCart();
     }
 
     @Override
     public boolean update(final Cart entity) {
-        return false;
+        return repository.update(entity);
     }
 }
