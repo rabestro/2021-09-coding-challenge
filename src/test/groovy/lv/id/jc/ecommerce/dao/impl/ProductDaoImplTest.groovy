@@ -13,44 +13,53 @@ class ProductDaoImplTest extends Specification {
     static final PRODUCT_ONE = new Product(ID_ONE)
     static final PRODUCT_TWO = new Product(ID_TWO)
 
-    EcommerceRepository repository = Stub()
-    ProductDao underTest
+    EcommerceRepository repositoryStub = Stub()
+    EcommerceRepository repositoryMock = Mock()
+    ProductDao productDao
 
     void setup() {
-        underTest = new ProductDaoImpl(repository)
+        productDao = new ProductDaoImpl(repositoryStub)
     }
 
     def "should return empty optional for unknown id"() {
-        given: "the repository returns empty optional for unknown id"
-        repository.getProductById(UNKNOWN_ID) >> Optional.empty()
 
-        when: "ProductDao requested for unknown id"
-        def result = underTest.getProductById(UNKNOWN_ID)
+        given: "the repository returns empty optional for some id"
+        repositoryStub.getProductById(_ as int) >> Optional.empty()
+
+        when: "ProductDao requested for this id"
+        def result = productDao.getById(UNKNOWN_ID)
 
         then: "result is empty optional"
         result.isEmpty()
     }
 
-    def "should return product for existing id"() {
+    def "should return #product for id=#id"() {
+
         given: "repository has a product with specified id"
-        repository.getProductById(ID_ONE) >> Optional.of(PRODUCT_ONE)
+        repositoryStub.getProductById(id) >> Optional.of(product)
 
         when: "ProductDao requested for specified id"
-        def result = underTest.getProductById(ID_ONE)
+        def result = productDao.getById(id)
 
         then: "result is present and it is a product with the specified id"
         result.isPresent()
-        result.get() == PRODUCT_ONE
-        result.get().id() == ID_ONE
+        result.get() == product
+        result.get().id() == id
+
+        where:
+        id     | product
+        ID_ONE | PRODUCT_ONE
+        ID_TWO | PRODUCT_TWO
     }
 
     @Unroll("should return #comment")
     def "should return all products"() {
+
         given: "the repository has some products"
-        repository.allProducts >> products
+        repositoryStub.allProducts >> products
 
         when: "ProductDao requested for all products"
-        def result = underTest.getAllProducts()
+        def result = productDao.getAll()
 
         then: "result has all available products"
         result == products
@@ -62,4 +71,15 @@ class ProductDaoImplTest extends Specification {
         [PRODUCT_ONE, PRODUCT_TWO] | "two products"
     }
 
+    def "should update the product"() {
+
+        given: "The ProductDao with mocked repository"
+        def productDao = new ProductDaoImpl(repositoryMock)
+
+        when: "ProductDao requested to update a product"
+        productDao.update(PRODUCT_ONE)
+
+        then: "The repository should call update"
+        1 * repositoryStub.update(PRODUCT_ONE)
+    }
 }

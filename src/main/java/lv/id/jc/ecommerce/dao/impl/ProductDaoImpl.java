@@ -16,12 +16,17 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public Optional<Product> getProductById(final int id) {
+    public Optional<Product> getById(final int id) {
         return repository.getProductById(id);
     }
 
     @Override
-    public List<Product> getAllProducts() {
+    public List<Product> getAll() {
         return repository.getAllProducts();
+    }
+
+    @Override
+    public boolean update(final Product product) {
+        return repository.update(product);
     }
 }
