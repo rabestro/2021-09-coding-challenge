@@ -17,11 +17,11 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Optional<Product> getProductById(final int id) {
-        return Optional.empty();
+        return repository.getProductById(id);
     }
 
     @Override
     public List<Product> getAllProducts() {
-        return List.of();
+        return repository.getAllProducts();
     }
 }
