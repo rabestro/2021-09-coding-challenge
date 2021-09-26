@@ -6,7 +6,7 @@ import lv.id.jc.ecommerce.repository.EcommerceRepository
 import spock.lang.Specification
 import spock.lang.Unroll
 
-class ProductDaoImplTest extends Specification {
+class ProductDaoSpec extends Specification {
     static final ID_ONE = 1
     static final ID_TWO = 2
     static final UNKNOWN_ID = 99
@@ -14,7 +14,6 @@ class ProductDaoImplTest extends Specification {
     static final PRODUCT_TWO = new Product(ID_TWO)
 
     EcommerceRepository repositoryStub = Stub()
-    EcommerceRepository repositoryMock = Mock()
     ProductDao productDao
 
     void setup() {
@@ -23,10 +22,10 @@ class ProductDaoImplTest extends Specification {
 
     def "should return empty optional for unknown id"() {
 
-        given: "the repository returns empty optional for some id"
-        repositoryStub.getProductById(_ as int) >> Optional.empty()
+        given: "the repository returns empty optional for an unknown id"
+        repositoryStub.getProductById(UNKNOWN_ID) >> Optional.empty()
 
-        when: "ProductDao requested for this id"
+        when: "productDao requested for the unknown id"
         def result = productDao.getById(UNKNOWN_ID)
 
         then: "result is empty optional"
@@ -58,7 +57,7 @@ class ProductDaoImplTest extends Specification {
         given: "the repository has some products"
         repositoryStub.allProducts >> products
 
-        when: "ProductDao requested for all products"
+        when: "productDao requested for all products"
         def result = productDao.getAll()
 
         then: "result has all available products"
@@ -73,13 +72,34 @@ class ProductDaoImplTest extends Specification {
 
     def "should update the product"() {
 
-        given: "The ProductDao with mocked repository"
+        given: "the repository is mocked"
+        EcommerceRepository repositoryMock = Mock()
+
+        and: "productDao created with mocked repository"
         def productDao = new ProductDaoImpl(repositoryMock)
 
-        when: "ProductDao requested to update a product"
+        when: "productDao requested to update a product"
         productDao.update(PRODUCT_ONE)
 
-        then: "The repository should call update"
-        1 * repositoryStub.update(PRODUCT_ONE)
+        then: "the mocked repository should call update"
+        1 * repositoryMock.update(PRODUCT_ONE)
     }
+
+    def "should return #status for #comment update"() {
+
+        given: "the repository returns status for product update"
+        repositoryStub.update(product) >> status
+
+        when: "productDao requested to update a product"
+        def result = productDao.update(product)
+
+        then: "method update returns correct status"
+        result == status
+
+        where:
+        product     | status | comment
+        PRODUCT_ONE | true   | "successful"
+        PRODUCT_TWO | false  | "unsuccessful"
+    }
+
 }
