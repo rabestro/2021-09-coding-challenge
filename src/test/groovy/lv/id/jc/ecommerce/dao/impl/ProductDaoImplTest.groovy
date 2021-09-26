@@ -50,7 +50,7 @@ class ProductDaoImplTest extends Specification {
         repository.allProducts >> products
 
         when: "ProductDao requested for all products"
-        def result = underTest.allProducts
+        def result = underTest.getAllProducts()
 
         then: "result has all available products"
         result == products
@@ -60,7 +60,6 @@ class ProductDaoImplTest extends Specification {
         []                         | "no products"
         [PRODUCT_ONE]              | "one product"
         [PRODUCT_ONE, PRODUCT_TWO] | "two products"
-
     }
 
 }
