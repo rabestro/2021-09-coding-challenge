@@ -1,8 +1,8 @@
 plugins {
-    id 'groovy'
+    id 'java'
 }
 
-group 'lv.id.jc'
+group 'lv.id.jc.ecommerce'
 version '1.0-SNAPSHOT'
 
 repositories {

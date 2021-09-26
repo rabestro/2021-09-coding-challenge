@@ -1,2 +1,3 @@
 rootProject.name = '2021-09-coding-challenge'
+include 'ecommerce'
 
