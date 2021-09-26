@@ -30,8 +30,9 @@ public class StoreFacadeImpl implements StoreFacade {
 
     @Override
     public boolean addProductToCart(final Cart cart, final Product product) {
-        var products = new ArrayList<>(cart.products());
+        final var products = new ArrayList<>(cart.products());
         products.add(product);
-        return cartDao.update(new Cart(cart.id(), products));
+        final var updatedCart = new Cart(cart.id(), products);
+        return cartDao.update(updatedCart);
     }
 }
