@@ -21,27 +21,32 @@ class ProductDaoImplTest extends Specification {
     }
 
     def "should return empty optional for unknown id"() {
-        given: "the repository returns empty optional for unknown id"
-        repository.getProductById(UNKNOWN_ID) >> Optional.empty()
+        given: "the repository returns empty optional for some id"
+        repository.getProductById(_ as int) >> Optional.empty()
 
-        when: "ProductDao requested for unknown id"
+        when: "ProductDao requested for this id"
         def result = underTest.getProductById(UNKNOWN_ID)
 
         then: "result is empty optional"
         result.isEmpty()
     }
 
-    def "should return product for existing id"() {
+    def "should return #product for id=#id"() {
         given: "repository has a product with specified id"
-        repository.getProductById(ID_ONE) >> Optional.of(PRODUCT_ONE)
+        repository.getProductById(id) >> Optional.of(product)
 
         when: "ProductDao requested for specified id"
-        def result = underTest.getProductById(ID_ONE)
+        def result = underTest.getProductById(id)
 
         then: "result is present and it is a product with the specified id"
         result.isPresent()
-        result.get() == PRODUCT_ONE
-        result.get().id() == ID_ONE
+        result.get() == product
+        result.get().id() == id
+
+        where:
+        id     | product
+        ID_ONE | PRODUCT_ONE
+        ID_TWO | PRODUCT_TWO
     }
 
     @Unroll("should return #comment")
