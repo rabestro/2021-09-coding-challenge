@@ -22,6 +22,6 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public List<Product> getAllProducts() {
-        return List.of();
+        return repository.getAllProducts();
     }
 }

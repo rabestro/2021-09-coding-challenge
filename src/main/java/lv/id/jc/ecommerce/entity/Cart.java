@@ -1,4 +1,6 @@
 package lv.id.jc.ecommerce.entity;
 
-public record Cart() {
+import java.util.List;
+
+public record Cart(int id, List<Product> products) {
 }
