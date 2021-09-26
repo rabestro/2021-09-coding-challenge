@@ -6,6 +6,7 @@ import lv.id.jc.ecommerce.entity.Cart;
 import lv.id.jc.ecommerce.entity.Product;
 import lv.id.jc.ecommerce.facade.StoreFacade;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StoreFacadeImpl implements StoreFacade {
@@ -28,9 +29,9 @@ public class StoreFacadeImpl implements StoreFacade {
     }
 
     @Override
-    public Cart addProductToCart(final Cart cart, final Product product) {
-        cart.products().add(product);
-        cartDao.update(cart);
-        return cart;
+    public boolean addProductToCart(final Cart cart, final Product product) {
+        var products = new ArrayList<>(cart.products());
+        products.add(product);
+        return cartDao.update(new Cart(cart.id(), products));
     }
 }

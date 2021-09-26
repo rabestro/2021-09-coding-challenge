@@ -10,5 +10,5 @@ public interface StoreFacade {
 
     List<Product> getCartProducts(int cartId);
 
-    Cart addProductToCart(Cart cart, Product product);
+    boolean addProductToCart(Cart cart, Product product);
 }
