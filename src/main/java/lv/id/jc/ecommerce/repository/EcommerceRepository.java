@@ -13,5 +13,7 @@ public interface EcommerceRepository {
 
     List<Product> getAllProducts();
 
+    List<Cart> getAllCart();
+
     boolean update(Record record);
 }
