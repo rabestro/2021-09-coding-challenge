@@ -16,7 +16,7 @@ public class CartDaoImpl implements CartDao {
 
     @Override
     public Optional<Cart> getById(final int id) {
-        return Optional.empty();
+        return repository.getCartById(id);
     }
 
     @Override
