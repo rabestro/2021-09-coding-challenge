@@ -1,4 +1,4 @@
 package lv.id.jc.ecommerce.entity;
 
-public record cart() {
+public record Cart() {
 }
