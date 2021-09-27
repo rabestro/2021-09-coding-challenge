@@ -2,15 +2,15 @@ package lv.id.jc.ecommerce.dao.impl;
 
 import lv.id.jc.ecommerce.dao.CartDao;
 import lv.id.jc.ecommerce.entity.Cart;
-import lv.id.jc.ecommerce.repository.EcommerceRepository;
+import lv.id.jc.ecommerce.repository.StoreRepository;
 
 import java.util.List;
 import java.util.Optional;
 
 public class CartDaoImpl implements CartDao {
-    private final EcommerceRepository repository;
+    private final StoreRepository repository;
 
-    public CartDaoImpl(final EcommerceRepository repository) {
+    public CartDaoImpl(final StoreRepository repository) {
         this.repository = repository;
     }
 

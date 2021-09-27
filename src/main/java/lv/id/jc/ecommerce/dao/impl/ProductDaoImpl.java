@@ -2,16 +2,16 @@ package lv.id.jc.ecommerce.dao.impl;
 
 import lv.id.jc.ecommerce.dao.ProductDao;
 import lv.id.jc.ecommerce.entity.Product;
-import lv.id.jc.ecommerce.repository.EcommerceRepository;
+import lv.id.jc.ecommerce.repository.StoreRepository;
 
 import java.util.List;
 import java.util.Optional;
 
 public class ProductDaoImpl implements ProductDao {
 
-    private final EcommerceRepository repository;
+    private final StoreRepository repository;
 
-    public ProductDaoImpl(final EcommerceRepository repository) {
+    public ProductDaoImpl(final StoreRepository repository) {
         this.repository = repository;
     }
 

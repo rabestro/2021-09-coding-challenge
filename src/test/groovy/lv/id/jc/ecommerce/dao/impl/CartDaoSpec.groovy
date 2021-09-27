@@ -3,7 +3,7 @@ package lv.id.jc.ecommerce.dao.impl
 import lv.id.jc.ecommerce.dao.CartDao
 import lv.id.jc.ecommerce.entity.Cart
 import lv.id.jc.ecommerce.entity.Product
-import lv.id.jc.ecommerce.repository.EcommerceRepository
+import lv.id.jc.ecommerce.repository.StoreRepository
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -16,7 +16,7 @@ class CartDaoSpec extends Specification {
     static final CART_ONE = new Cart(ID_ONE, [])
     static final CART_TWO = new Cart(ID_TWO, [PRODUCT_ONE, PRODUCT_TWO])
 
-    EcommerceRepository repositoryStub = Stub()
+    StoreRepository repositoryStub = Stub()
     CartDao underTest
 
     void setup() {
@@ -74,7 +74,7 @@ class CartDaoSpec extends Specification {
 
     def "should update a cart"() {
         given: "the repository is mocked"
-        EcommerceRepository repositoryMock = Mock()
+        StoreRepository repositoryMock = Mock()
 
         and: "cartDao created with mocked repository"
         def cartDao = new CartDaoImpl(repositoryMock)
