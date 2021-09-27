@@ -2,26 +2,29 @@ package lv.id.jc.ecommerce.dao.impl;
 
 import lv.id.jc.ecommerce.dao.CartDao;
 import lv.id.jc.ecommerce.entity.Cart;
-import lv.id.jc.ecommerce.repository.EcommerceRepository;
+import lv.id.jc.ecommerce.repository.StoreRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-public class CartDaoImpl implements CartDao {
-    private final EcommerceRepository repository;
+import static java.util.Collections.emptyList;
+import static java.util.Objects.requireNonNullElse;
 
-    public CartDaoImpl(final EcommerceRepository repository) {
+public class CartDaoImpl implements CartDao {
+    private final StoreRepository repository;
+
+    public CartDaoImpl(final StoreRepository repository) {
         this.repository = repository;
     }
 
     @Override
     public Optional<Cart> getById(final int id) {
-        return repository.getCartById(id);
+        return Optional.ofNullable(repository.getCartById(id));
     }
 
     @Override
     public List<Cart> getAll() {
-        return repository.getAllCart();
+        return requireNonNullElse(repository.getAllCart(), emptyList());
     }
 
     @Override

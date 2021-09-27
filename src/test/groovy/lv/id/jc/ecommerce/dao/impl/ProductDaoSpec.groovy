@@ -2,7 +2,7 @@ package lv.id.jc.ecommerce.dao.impl
 
 import lv.id.jc.ecommerce.dao.ProductDao
 import lv.id.jc.ecommerce.entity.Product
-import lv.id.jc.ecommerce.repository.EcommerceRepository
+import lv.id.jc.ecommerce.repository.StoreRepository
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -13,7 +13,7 @@ class ProductDaoSpec extends Specification {
     static final PRODUCT_ONE = new Product(ID_ONE)
     static final PRODUCT_TWO = new Product(ID_TWO)
 
-    EcommerceRepository repositoryStub = Stub()
+    StoreRepository repositoryStub = Stub()
     ProductDao productDao
 
     void setup() {
@@ -23,7 +23,7 @@ class ProductDaoSpec extends Specification {
     def "should return empty optional for unknown id"() {
 
         given: "the repository returns empty optional for an unknown id"
-        repositoryStub.getProductById(UNKNOWN_ID) >> Optional.empty()
+        repositoryStub.getProductById(UNKNOWN_ID) >> null
 
         when: "productDao requested for the unknown id"
         def result = productDao.getById(UNKNOWN_ID)
@@ -35,7 +35,7 @@ class ProductDaoSpec extends Specification {
     def "should return #product for id=#id"() {
 
         given: "repository has a product with specified id"
-        repositoryStub.getProductById(id) >> Optional.of(product)
+        repositoryStub.getProductById(id) >> product
 
         when: "ProductDao requested for specified id"
         def result = productDao.getById(id)
@@ -73,7 +73,7 @@ class ProductDaoSpec extends Specification {
     def "should update the product"() {
 
         given: "the repository is mocked"
-        EcommerceRepository repositoryMock = Mock()
+        StoreRepository repositoryMock = Mock()
 
         and: "productDao created with mocked repository"
         def productDao = new ProductDaoImpl(repositoryMock)
