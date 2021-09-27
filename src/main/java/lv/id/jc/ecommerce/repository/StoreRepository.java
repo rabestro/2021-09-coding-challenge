@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface StoreRepository {
-    Optional<Product> getProductById(int id);
+    Product getProductById(int id);
 
-    Optional<Cart> getCartById(int id);
+    Cart getCartById(int id);
 
     List<Product> getAllProducts();
 

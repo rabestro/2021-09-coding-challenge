@@ -16,7 +16,7 @@ public class CartDaoImpl implements CartDao {
 
     @Override
     public Optional<Cart> getById(final int id) {
-        return repository.getCartById(id);
+        return Optional.ofNullable(repository.getCartById(id));
     }
 
     @Override

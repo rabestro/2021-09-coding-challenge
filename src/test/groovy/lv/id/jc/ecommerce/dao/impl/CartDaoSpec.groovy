@@ -25,7 +25,7 @@ class CartDaoSpec extends Specification {
 
     def "should return empty optional for unknown id"() {
         given: "the repository returns empty optional for an unknown id"
-        repositoryStub.getCartById(UNKNOWN_ID) >> Optional.empty()
+        repositoryStub.getCartById(UNKNOWN_ID) >> null
 
         when: "we get a cart by unknown id"
         def result = underTest.getById(UNKNOWN_ID)
@@ -37,7 +37,7 @@ class CartDaoSpec extends Specification {
     def "should return #cart for id=#id"() {
 
         given: "repository has a cart with specified id"
-        repositoryStub.getCartById(id) >> Optional.of(cart)
+        repositoryStub.getCartById(id) >> cart
 
         when: "we requested a cart by the id"
         def result = underTest.getById(id)

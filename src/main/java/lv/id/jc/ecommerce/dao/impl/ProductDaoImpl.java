@@ -17,7 +17,7 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Optional<Product> getById(final int id) {
-        return repository.getProductById(id);
+        return Optional.ofNullable(repository.getProductById(id));
     }
 
     @Override

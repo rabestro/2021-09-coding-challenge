@@ -23,7 +23,7 @@ class ProductDaoSpec extends Specification {
     def "should return empty optional for unknown id"() {
 
         given: "the repository returns empty optional for an unknown id"
-        repositoryStub.getProductById(UNKNOWN_ID) >> Optional.empty()
+        repositoryStub.getProductById(UNKNOWN_ID) >> null
 
         when: "productDao requested for the unknown id"
         def result = productDao.getById(UNKNOWN_ID)
@@ -35,7 +35,7 @@ class ProductDaoSpec extends Specification {
     def "should return #product for id=#id"() {
 
         given: "repository has a product with specified id"
-        repositoryStub.getProductById(id) >> Optional.of(product)
+        repositoryStub.getProductById(id) >> product
 
         when: "ProductDao requested for specified id"
         def result = productDao.getById(id)
