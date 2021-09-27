@@ -32,3 +32,13 @@ The solution will be evaluated based on the following criteria:
 * Maintainability
 * Test coverage
 * Performance
+
+# Solution
+
+While a real commerce solution contains many levels of abstraction, in our simple example, we limited ourselves to only three levels. The topmost level is the façade. The facade interface specifies the three required methods. We do not use services, to get data, the facade calls directly DTO objects.
+The DTO objects themselves refer to the nominal repository. 
+A situation was simulated when the legacy repository code can return null.
+The DTO objects demonstrate how to handle such cases.
+
+For unit tests we used Spock Framework. 
+This made it possible to generate specifications automatically.
