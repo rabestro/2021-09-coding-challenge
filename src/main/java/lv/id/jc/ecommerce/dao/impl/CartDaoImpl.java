@@ -7,6 +7,9 @@ import lv.id.jc.ecommerce.repository.StoreRepository;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Collections.emptyList;
+import static java.util.Objects.requireNonNullElse;
+
 public class CartDaoImpl implements CartDao {
     private final StoreRepository repository;
 
@@ -21,7 +24,7 @@ public class CartDaoImpl implements CartDao {
 
     @Override
     public List<Cart> getAll() {
-        return repository.getAllCart();
+        return requireNonNullElse(repository.getAllCart(), emptyList());
     }
 
     @Override
