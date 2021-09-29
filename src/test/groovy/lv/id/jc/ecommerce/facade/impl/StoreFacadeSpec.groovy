@@ -6,6 +6,7 @@ import lv.id.jc.ecommerce.entity.Cart
 import lv.id.jc.ecommerce.entity.Product
 import lv.id.jc.ecommerce.facade.StoreFacade
 import spock.lang.Specification
+import spock.lang.Subject
 import spock.lang.Unroll
 
 class StoreFacadeSpec extends Specification {
@@ -20,13 +21,25 @@ class StoreFacadeSpec extends Specification {
     static final EMPTY_CART = new Cart(ID_ONE, [])
     static final CART_TWO = new Cart(ID_TWO, [PRODUCT_ONE, PRODUCT_TWO])
 
+    ProductDao mockedProductDao = Mock()
+    CartDao mockedCartDao = Mock()
+
     ProductDao productDao = Stub()
     CartDao cartDao = Stub()
 
+    @Subject
     StoreFacade storeFacade
 
     void setup() {
         storeFacade = new StoreFacadeImpl(productDao, cartDao)
+    }
+
+    def "should thrown an exception"() {
+        when:
+        storeFacade.addProductToCart(null, PRODUCT_ONE)
+
+        then:
+        thrown(NullPointerException)
     }
 
     @Unroll("should return #comment")
@@ -68,11 +81,7 @@ class StoreFacadeSpec extends Specification {
 
     @Unroll("should add a product to #comment")
     def "should add product to the cart"() {
-        given: "cartDao and productDao"
-        CartDao mockedCartDao = Mock()
-        ProductDao mockedProductDao = Mock()
-
-        and: "storeFacade with injected dao"
+        given: "storeFacade with injected dao"
         def storeFacade = new StoreFacadeImpl(mockedProductDao, mockedCartDao)
 
         when: "we add a product to the cart"
