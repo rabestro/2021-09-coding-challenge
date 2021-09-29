@@ -81,21 +81,20 @@ class StoreFacadeSpec extends Specification {
 
     @Unroll("should add a product to #comment")
     def "should add product to the cart"() {
+
         given: "storeFacade with injected dao"
+        CartDao mockedCartDao = Mock()
+        ProductDao mockedProductDao = Mock()
         def storeFacade = new StoreFacadeImpl(mockedProductDao, mockedCartDao)
 
         when: "we add a product to the cart"
         storeFacade.addProductToCart(cart, product)
 
-        then: "product should not be updated"
-        0 * mockedProductDao.update(_)
+        then: "the cart should be updated with correct id and products"
+        1 * mockedCartDao.update({ it -> it.id == cart.id() && it.products == expected})
 
-        and: "the cart should be updated with correct id and products"
-        1 * mockedCartDao.update({
-            updatedCart ->
-                updatedCart.id == cart.id() &&
-                        updatedCart.products == expected
-        })
+        and: "product should not be updated"
+        0 * mockedProductDao.update(_)
 
         where:
         cart       | comment                | product     || expected
